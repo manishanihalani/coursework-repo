@@ -1,0 +1,330 @@
+import java.util.*;
+
+public class ArrayProblems {
+
+    private int[] arr;
+
+    public ArrayProblems(int[] arr) {
+        this.arr = arr;
+    }
+
+    // Problem 1: Find the maximum element in the array
+    public int findMax() {
+        int max = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+        return max;
+    }
+
+    // Problem 2: Find the minimum element in the array
+    public int findMin() {
+        int min = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] < min) {
+                min = arr[i];
+            }
+        }
+        return min;
+    }
+
+    // Problem 3: Find the sum of elements in the array
+    public int findSum() {
+        int sum = 0;
+        for (int num : arr) {
+            sum += num;
+        }
+        return sum;
+    }
+
+    // Problem 4: Reverse the array
+    public int[] reverseArray() {
+        int[] reversedArr = arr.clone();
+        int start = 0, end = reversedArr.length - 1;
+        while (start < end) {
+            int temp = reversedArr[start];
+            reversedArr[start] = reversedArr[end];
+            reversedArr[end] = temp;
+            start++;
+            end--;
+        }
+        return reversedArr;
+    }
+
+    // Problem 5: Rotate the array by k positions
+    public int[] rotateArray(int k) {
+        k = k % arr.length;  // handle cases where k > arr.length
+        int[] rotatedArr = new int[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            rotatedArr[(i + k) % arr.length] = arr[i];
+        }
+        return rotatedArr;
+    }
+
+    // Problem 6: Remove duplicates from the array
+    public int[] removeDuplicates() {
+        Set<Integer> set = new HashSet<>();
+        for (int num : arr) {
+            set.add(num);
+        }
+        int[] uniqueArr = new int[set.size()];
+        int index = 0;
+        for (int num : set) {
+            uniqueArr[index++] = num;
+        }
+        return uniqueArr;
+    }
+
+    // Problem 7: Insert an element at a specific position
+    public int[] insertElement(int index, int value) {
+        if (index < 0 || index > arr.length) {
+            throw new IllegalArgumentException("Invalid index");
+        }
+        int[] newArr = new int[arr.length + 1];
+        for (int i = 0; i < index; i++) {
+            newArr[i] = arr[i];
+        }
+        newArr[index] = value;
+        for (int i = index + 1; i < newArr.length; i++) {
+            newArr[i] = arr[i - 1];
+        }
+        return newArr;
+    }
+
+    // Problem 8: Delete an element by its value
+    public int[] deleteElementByValue(int value) {
+        int count = 0;
+        for (int num : arr) {
+            if (num == value) {
+                count++;
+            }
+        }
+        if (count == 0) {
+            return arr;
+        }
+
+        int[] newArr = new int[arr.length - count];
+        int index = 0;
+        for (int num : arr) {
+            if (num != value) {
+                newArr[index++] = num;
+            }
+        }
+        return newArr;
+    }
+
+    // Problem 9: Find the index of an element
+    public int findIndex(int value) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == value) {
+                return i;
+            }
+        }
+        return -1;  // Element not found
+    }
+
+    // Problem 10: Sort the array in ascending order
+    public int[] sortArray() {
+        int[] sortedArr = arr.clone();
+        Arrays.sort(sortedArr);
+        return sortedArr;
+    }
+
+    // Problem 11: Merge two sorted arrays
+    public int[] mergeSortedArrays(int[] arr2) {
+        int[] mergedArr = new int[arr.length + arr2.length];
+        int i = 0, j = 0, k = 0;
+        while (i < arr.length && j < arr2.length) {
+            if (arr[i] < arr2[j]) {
+                mergedArr[k++] = arr[i++];
+            } else {
+                mergedArr[k++] = arr2[j++];
+            }
+        }
+        while (i < arr.length) {
+            mergedArr[k++] = arr[i++];
+        }
+        while (j < arr2.length) {
+            mergedArr[k++] = arr2[j++];
+        }
+        return mergedArr;
+    }
+
+    // Problem 12: Check if the array is a palindrome
+    public boolean isPalindrome() {
+        int start = 0, end = arr.length - 1;
+        while (start < end) {
+            if (arr[start] != arr[end]) {
+                return false;
+            }
+            start++;
+            end--;
+        }
+        return true;
+    }
+
+    // Problem 13: Find the intersection of two arrays
+    public int[] intersection(int[] arr2) {
+        Set<Integer> set1 = new HashSet<>();
+        Set<Integer> intersectionSet = new HashSet<>();
+        for (int num : arr) {
+            set1.add(num);
+        }
+        for (int num : arr2) {
+            if (set1.contains(num)) {
+                intersectionSet.add(num);
+            }
+        }
+        int[] intersectionArr = new int[intersectionSet.size()];
+        int index = 0;
+        for (int num : intersectionSet) {
+            intersectionArr[index++] = num;
+        }
+        return intersectionArr;
+    }
+
+    // Problem 14: Find the union of two arrays
+    public int[] union(int[] arr2) {
+        Set<Integer> unionSet = new HashSet<>();
+        for (int num : arr) {
+            unionSet.add(num);
+        }
+        for (int num : arr2) {
+            unionSet.add(num);
+        }
+        int[] unionArr = new int[unionSet.size()];
+        int index = 0;
+        for (int num : unionSet) {
+            unionArr[index++] = num;
+        }
+        return unionArr;
+    }
+
+    // Problem 15: Find the difference of two arrays
+    public int[] difference(int[] arr2) {
+        Set<Integer> set1 = new HashSet<>();
+        for (int num : arr) {
+            set1.add(num);
+        }
+        Set<Integer> differenceSet = new HashSet<>();
+        for (int num : arr2) {
+            if (!set1.contains(num)) {
+                differenceSet.add(num);
+            }
+        }
+        int[] differenceArr = new int[differenceSet.size()];
+        int index = 0;
+        for (int num : differenceSet) {
+            differenceArr[index++] = num;
+        }
+        return differenceArr;
+    }
+
+    // Problem 16: Check if the array contains a subarray with sum equal to a given number
+    public boolean hasSubarrayWithSum(int targetSum) {
+        for (int i = 0; i < arr.length; i++) {
+            int currentSum = 0;
+            for (int j = i; j < arr.length; j++) {
+                currentSum += arr[j];
+                if (currentSum == targetSum) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // Problem 17: Find the majority element (element that appears more than n//2 times)
+    public int majorityElement() {
+        Map<Integer, Integer> countMap = new HashMap<>();
+        for (int num : arr) {
+            countMap.put(num, countMap.getOrDefault(num, 0) + 1);
+        }
+        for (Map.Entry<Integer, Integer> entry : countMap.entrySet()) {
+            if (entry.getValue() > arr.length / 2) {
+                return entry.getKey();
+            }
+        }
+        return -1;  // No majority element
+    }
+
+    // Problem 18: Move all zeroes to the end while maintaining the relative order of non-zero elements
+    public int[] moveZeroesToEnd() {
+        int[] newArr = new int[arr.length];
+        int index = 0;
+        for (int num : arr) {
+            if (num != 0) {
+                newArr[index++] = num;
+            }
+        }
+        for (int i = index; i < newArr.length; i++) {
+            newArr[i] = 0;
+        }
+        return newArr;
+    }
+
+    // Problem 19: Find the first non-repeating element
+    public int firstNonRepeating() {
+        Map<Integer, Integer> countMap = new HashMap<>();
+        for (int num : arr) {
+            countMap.put(num, countMap.getOrDefault(num, 0) + 1);
+        }
+        for (int num : arr) {
+            if (countMap.get(num) == 1) {
+                return num;
+            }
+        }
+        return -1;  // No non-repeating element
+    }
+
+    // Problem 20: Rearrange positive and negative numbers (negative numbers first)
+    public int[] rearrangePosNeg() {
+        List<Integer> positive = new ArrayList<>();
+        List<Integer> negative = new ArrayList<>();
+        for (int num : arr) {
+            if (num >= 0) {
+                positive.add(num);
+            } else {
+                negative.add(num);
+            }
+        }
+        int[] result = new int[arr.length];
+        int index = 0;
+        for (int num : negative) {
+            result[index++] = num;
+        }
+        for (int num : positive) {
+            result[index++] = num;
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {1, -2, 3, -4, 0, 1, 1, -2, 3};
+        ArrayProblems solver = new ArrayProblems(arr);
+
+        // Example Problem 1: Find maximum element
+        System.out.println("Maximum: " + solver.findMax());
+
+        // Example Problem 2: Reverse the array
+        System.out.println("Reversed: " + Arrays.toString(solver.reverseArray()));
+
+        // Example Problem 3: Rotate array by 2 positions
+        System.out.println("Rotated by 2 positions: " + Arrays.toString(solver.rotateArray(2)));
+
+        // Example Problem 4: Remove duplicates
+        System.out.println("After removing duplicates: " + Arrays.toString(solver.removeDuplicates()));
+
+        // Example Problem 5: Sort the array
+        System.out.println("Sorted: " + Arrays.toString(solver.sortArray()));
+
+        // Example Problem 6: Merge with another array
+        int[] arr2 = {5, -3, 2, 1};
+        System.out.println("Merged sorted array: " + Arrays.toString(solver.mergeSortedArrays(arr2)));
+
+        // Example Problem 7: Check for majority element
+        System.out.println("Majority element: " + solver.majorityElement());
+    }
+}
